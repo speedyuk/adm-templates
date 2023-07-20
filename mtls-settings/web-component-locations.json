@@ -1,0 +1,49 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "type": "object",
+    "properties": {
+        "v1": {
+            "type": "object",
+            "properties": {
+                "locations": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "properties": {
+                            "customExtensions": {
+                                "type": [
+                                    "object",
+                                    "null"
+                                ],
+                                "properties": {
+                                    "mTLS": {
+                                        "type": "object",
+                                        "title": "mTLS Settings",
+                                        "description": "Client Certificate Authentication settings.",
+                                        "required": ["mTLSEnable"],
+                                        "properties": {
+                                            "mTLSEnable": {
+                                                "type": "string",
+                                                "title": "MTLS Enable",
+                                                "description": "Enables Client Certificates Authentication on the Application.",
+                                                "enum": [
+                                                    "off",
+                                                    "on"
+                                                ],
+                                                "examples": [
+                                                    "on",
+                                                    "off"
+                                                ]
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "required": []
+}

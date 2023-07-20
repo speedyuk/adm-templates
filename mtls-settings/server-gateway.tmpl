@@ -1,0 +1,26 @@
+{{/* For demo and PoC only */}}
+{{/* All rights reserved. */}}
+{{/* Fouad Chmainy  */}}
+
+{{$input := .}}
+{{$gwData := .Data.V1}}
+{{$argsLen := len $input.Args}}
+{{if lt $argsLen 1}}
+    {{fail "base template did not pass in the required arguments"}}
+{{end}}
+{{$serverIndex := index $input.Args 0}}
+{{$server := index $gwData.servers $serverIndex}}
+{{$uriCe := $server.customExtensions}}
+
+{{/* mTLS settings are presernt and set to "on"*/}}
+{{if and $uriCe $uriCe.mTLS (eq $uriCe.mTLS.mTLSEnable "on")}}
+    {{/* Default certificate. Used when mTLS is "on" but certificate is not specified*/}}
+    {{$cert := "ca.crt"}}
+    {{$mTLS := $uriCe.mTLS}}
+
+    {{/* Certificate is specified, override the default */}}
+    {{if $mTLS.clientCertFile}}
+        {{$cert = $mTLS.clientCertFile}}
+    {{end}}
+    ssl_client_certificate /etc/ssl/certs/{{$cert}};
+{{end}}
